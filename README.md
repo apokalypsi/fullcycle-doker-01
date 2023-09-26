@@ -1,17 +1,29 @@
-# fullcycle-doker-01
+# Desafio Full Cycle Módulo Docker
+## Desafio Go
 
-Para construir e executar a imagem Docker com o Dockerfile fornecido localmente, siga estas etapas:
+Esse desafio é muito empolgante principalmente se você nunca trabalhou com a linguagem Go!
+Você terá que publicar uma imagem no docker hub. Quando executarmos:
 
-1. Coloque seu código Go (o arquivo codeedu.go) e o Dockerfile na mesma pasta.
-2. Abra o terminal e navegue até o diretório onde estão os arquivos.
-3. Use o comando docker build para criar a imagem. Certifique-se de substituir <nome-da-imagem> pelo nome que você deseja dar à sua imagem e <caminho-para-o-dockerfile> pelo caminho para o Dockerfile. Por exemplo:
- 
-       -  docker build -t <nome-da-imagem> -f <caminho-para-o-dockerfile> .
+docker run <seu-user>/fullcycle
 
-Por exemplo:
+Temos que ter o seguinte resultado: Full Cycle Rocks!!
 
-       -  docker build -t codeeducation-image -f Dockerfile .
+Se você perceber, essa imagem apenas realiza um print da mensagem como resultado final, logo, vale a pena dar uma conferida no próprio site da Go Lang para aprender como fazer um "olá mundo".
 
-4. Após a construção da imagem, você pode executá-la com o comando docker run:
-   
-       - docker run codeeducation-image
+Lembrando que a Go Lang possui imagens oficiais prontas, vale a pena consultar o Docker Hub.
+
+
+# Build 
+```
+docker build -t diego-batista/fullcycle .
+```
+
+# Pull 
+```
+docker pull diego-batista/fullcycle
+```
+
+# Executar o container
+```
+docker run --rm diego-batista/fullcycle
+```
