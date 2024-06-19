@@ -1,20 +1,26 @@
-# Use a imagem oficial do Go como estágio de construção
-FROM golang:latest as build-stage
+# Use the official Go image to create a build artifact.
+FROM golang:1.16 as builder
 
-# Defina o diretório de trabalho para /src
-WORKDIR /src
+# Set the Current Working Directory inside the container
+WORKDIR /app
 
-# Copie o código fonte para o diretório de trabalho
-COPY codeedu.go .
+# Copy go mod and sum files
+COPY go.mod go.sum ./
 
-# Compile o código fonte
-RUN CGO_ENABLED=0 go build -o codeedu codeedu.go
+# Download all dependencies. Dependencies will be cached if the go.mod and go.sum files are not changed
+RUN go mod download
 
-# Use uma imagem mínima como estágio de produção
-FROM scratch as production-stage
+# Copy the source from the current directory to the Working Directory inside the container
+COPY . .
 
-# Copie o executável do estágio de construção
-COPY --from=build-stage /src/codeedu /codeedu
+# Build the Go app
+RUN go build -o /app/main .
 
-# Configure o comando padrão para executar o programa
-CMD ["/codeedu"]
+# Start a new stage from scratch
+FROM scratch
+
+# Copy the Pre-built binary file from the previous stage
+COPY --from=builder /app/main /app/main
+
+# Command to run the executable
+ENTRYPOINT ["/app/main"]
